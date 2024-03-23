@@ -1,4 +1,5 @@
-﻿using ProjetoAula03.Entities;
+﻿using Dapper;
+using ProjetoAula03.Entities;
 using ProjetoAula03.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,28 +15,78 @@ namespace ProjetoAula03.Repositories
     /// </summary>
     public class EmpresaRepository : IBaseRepository<Empresa>
     {
+        //atributo
+        private readonly string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDAula03;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         public void Create(Empresa obj)
-        {
-            using (var connection = new SqlConnection())
+        {   //Escrevendo o comando SQL
+            var sql = @"
+                      INSERT INTO EMPRESA(ID, RAZAOSOCIAL, NOMEFANTASIA, CNPJ)
+                      VALUES(@Id, @RazaoSocial, @NomeFantasia, @Cnpj)
+                       ";
+        
+            //abrindo conexão com o SQLSERVER
+            using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();                                                                                                                                                                                                                                                      
+                //Executando o comando com  Dapper (Execute) e um comando Dapper
+                connection.Execute(sql, obj);
+                                                                                                                                                                                                                                                                     
 
             }
         }
 
         public void Delete(Empresa obj)
         {
-            throw new NotImplementedException();
+            //escrevendo o comando SQL
+            var sql = @"
+                             DELETE FROM EMPRESA
+                             WHERE ID = @Id
+                          ";
+
+            //abrindo conexão com o SQLSERVER
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                //executando o comando com o Dapper
+                connection.Execute(sql, obj);   
+
+            }
         }
 
         public List<Empresa> GetAll()
         {
-            throw new NotImplementedException();
+            //escrevendo o comando SQL
+            var sql = @"
+                      SELECT * FROM EMPRESA
+                      ORDER BY
+                          NOMEFANTASIA ASC
+                      
+                      ";
+
+            //abrindo conexão com o SQLSERVER
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                //Executando o comando com o Dapper, e retornando o resultado
+                return connection.Query<Empresa>(sql).ToList();
+            }
         }
 
         public void Update(Empresa obj)
         {
-            throw new NotImplementedException();
+            //escrevendo o comando SQL
+            var sql = @"
+                    UPDATE EMPRESA SET
+                       RAZAOSOCIAL = @RazaoSocial,
+                       NOMEFANTASIA = @NomeFantasia,
+                       CNPJ = @Cnpj
+                    WHERE
+                        ID = @id
+                 ";
+            //abrindo conexão com o SQLSERVER
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                //executando o comando com o Dapper
+                connection.Execute(sql, obj);
+
+            }
         }
     }
 }
