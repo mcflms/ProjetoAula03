@@ -23,9 +23,9 @@ namespace ProjetoAula03.Repositories
                       INSERT INTO EMPRESA(ID, RAZAOSOCIAL, NOMEFANTASIA, CNPJ)
                       VALUES(@Id, @RazaoSocial, @NomeFantasia, @Cnpj)
                        ";
-        
+
             //abrindo conexão com o SQLSERVER
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString)) 
             {
                 //Executando o comando com  Dapper (Execute) e um comando Dapper
                 connection.Execute(sql, obj);
@@ -71,6 +71,7 @@ namespace ProjetoAula03.Repositories
 
         public void Update(Empresa obj)
         {
+           
             //escrevendo o comando SQL
             var sql = @"
                     UPDATE EMPRESA SET
@@ -83,8 +84,10 @@ namespace ProjetoAula03.Repositories
             //abrindo conexão com o SQLSERVER
             using (var connection = new SqlConnection(_connectionString))
             {
+               
                 //executando o comando com o Dapper
                 connection.Execute(sql, obj);
+               
 
             }
         }

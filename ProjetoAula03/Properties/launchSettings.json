@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ProjetoAula03": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}
