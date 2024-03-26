@@ -5,4 +5,4 @@
 
 </div>
 :construction: Criando Vinculo de associação entre Entidades, utilizando interfaces
-e manipulando dados no SQLSERVER com Dapper, no Console.:construction:
+e manipulando dados no SQLSERVER com Dapper, Console Application.:construction:
